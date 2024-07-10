@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const errorHandlers = require('./handlers/errorhandlers');
+const errorHandlers = require('./handlers/errorHandlers');
 const mongoose = require('mongoose');
 
 require('dotenv').config();
