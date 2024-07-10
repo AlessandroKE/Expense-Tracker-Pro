@@ -15,6 +15,8 @@ mongoose.connect(process.env.mongo_connection,{}).then(()=>{
     console.log('Mongo connection failed')
 })
 
+
+require('./models/users.model');
 // Error handling middleware should be defined last
 app.use(errorHandlers);
 
