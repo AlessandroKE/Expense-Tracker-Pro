@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     Balance:{
         type: 'number',
         required: [true, 'balance is required'],
-        default: 0
+        default: 0,
     }
 })
 
