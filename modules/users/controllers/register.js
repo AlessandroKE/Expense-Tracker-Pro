@@ -19,6 +19,7 @@ const register = async (req, res) => {
     if (getDuplicateEmail) return res.status(400).json({ error: "This email already exists!" });
 
     // Hash the password
+    //use more rounds to hash between 10 and 12.
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
