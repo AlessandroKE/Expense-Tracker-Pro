@@ -4,22 +4,31 @@ const jsonwebtoken = require('jsonwebtoken');
 const auth = (req, res, next) => {
 
 
-   // console.log(req.headers);
+    // console.log(req.headers);
 
-   /*  console.log ("Hello from Middleware")
-    throw "cant do this now";
-   // next(); */
+    /*  console.log ("Hello from Middleware")
+     throw "cant do this now";
+    // next(); */
+    try {
+        const acessToken = req.headers.authorization.replace("Bearer ", "");
 
-   const acessToken = req.headers.authorization.replace("Bearer ","");
 
+        const JWTverification = jsonwebtoken.verify(
+            acessToken,
+            process.env.jwt_salt
+        );
+        //console.log(JWTverification);
+        req.user = JWTverification;
 
-   const JWTverification = jsonwebtoken.verify(
-    acessToken, 
-    process.env.jwt_salt
-    );
-   console.log(JWTverification);
+    } catch (err) {
+        res.status(401).json({ 
+            status: "failed",
+            Error: err.message
+        });
+        return;
+    }
+    next();
 
-   next();
 }
 
 module.exports = auth;
