@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const jsonwebtoken = require("jsonwebtoken");
+const jwtManager = require('../../../manager/jwtManager');
 const register = async (req, res) => {
   const usersModel = mongoose.model("users");
 
@@ -30,8 +30,7 @@ const register = async (req, res) => {
       balance: balance,
     });
 
-    const acessToken =  jsonwebtoken.sign({
-      _id: createdUser._id, full_name:createdUser.full_name, email:createdUser.email}, process.env.jwt_salt)
+    const acessToken =  jwtManager(createdUser);
 
     res.status(201).json({ 
       status: "User registered successfully!", 
