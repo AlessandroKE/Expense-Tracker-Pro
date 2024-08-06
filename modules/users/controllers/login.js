@@ -7,6 +7,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    //collects as an object.
     const getUser = await userModel.findOne({ email });
     if (!getUser) {
       return res.status(400).json({ error: "This email does not exist" });

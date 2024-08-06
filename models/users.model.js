@@ -2,24 +2,29 @@ const mongoose = require('mongoose');
 
 
 const userSchema = new mongoose.Schema({
-    full_name:{
+    full_name: {
         type: 'string',
         required: [true, 'full name is required']
     },
-    email:{
+    email: {
         type: 'string',
         required: [true, 'email is required']
     },
-    password:{
+    password: {
         type: 'string',
         required: [true, 'password is required']
     },
-    Balance:{
+    Balance: {
         type: 'number',
         required: [true, 'balance is required'],
         default: 0,
     }
-})
+
+},
+{
+    timestamps:true,
+}
+)
 
 
 const userModel = mongoose.model('users', userSchema);
