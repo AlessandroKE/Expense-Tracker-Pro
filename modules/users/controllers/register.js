@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
+const jwtManager = require('../../../manager/jwtManager');
 const register = async (req, res) => {
   const usersModel = mongoose.model("users");
 
@@ -19,17 +19,23 @@ const register = async (req, res) => {
     if (getDuplicateEmail) return res.status(400).json({ error: "This email already exists!" });
 
     // Hash the password
+    //use more rounds to hash between 10 and 12.
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create new user
-    await usersModel.create({
+   const createdUser = await usersModel.create({
       full_name: full_name,
       email: email,
       password: hashedPassword,
       balance: balance,
     });
 
-    res.status(201).json({ status: "User registered successfully!" });
+    const acessToken =  jwtManager(createdUser);
+
+    res.status(201).json({ 
+      status: "User registered successfully!", 
+      acessToken: acessToken,
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

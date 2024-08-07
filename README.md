@@ -1,2 +1,2 @@
 # Expense-Tracker-Pro
-Building a simple expense tracker using Nodejs
+Building a expense tracker API using Nodejs.
