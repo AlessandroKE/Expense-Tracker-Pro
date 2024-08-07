@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
         type: 'string',
         required: [true, 'password is required']
     },
-    Balance: {
+    // MongoDB is case sensitive
+    balance: {
         type: 'number',
         required: [true, 'balance is required'],
         default: 0,
