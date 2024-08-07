@@ -1,15 +1,24 @@
-const mongoose = require('mongoose')
 const jsonwebtoken = require('jsonwebtoken');
 
-const jwtManager = (users) =>{
+const jwtManager = (user) => {
+    try {
+        // Check if the JWT secret environment variable is set
+        if (!process.env.jwt_salt) {
+            throw new Error('JWT_SECRET environment variable is not set.');
+        }
 
-    const acessToken =  
-    jsonwebtoken.sign({
-        _id: users._id, full_name:users.full_name, email:users.email},
-         process.env.jwt_salt)
+        // Create JWT with a secret key and expiration time
+        const accessToken = jsonwebtoken.sign(
+            { _id: user._id, full_name: user.full_name, email: user.email },
+            process.env.jwt_salt, // Use jwt_salt from environment variables
+            { expiresIn: '1h' } // Token expiration time
+        );
 
-    return acessToken;
+        return accessToken;
+    } catch (error) {
+        console.error('Error generating JWT:', error.message);
+        throw error; // Rethrow the error after logging it
+    }
+};
 
-}
-
-module.exports = jwtManager
+module.exports = jwtManager;

@@ -10,14 +10,14 @@ const auth = (req, res, next) => {
      throw "cant do this now";
     // next(); */
     try {
-        const acessToken = req.headers.authorization.replace("Bearer ", "");
+        const accessToken = req.headers.authorization.replace("Bearer ", "");
 
 
         const JWTverification = jsonwebtoken.verify(
-            acessToken,
+            accessToken,
             process.env.jwt_salt
         );
-        //console.log(JWTverification);
+        console.log(JWTverification);
         req.user = JWTverification;
 
     } catch (err) {

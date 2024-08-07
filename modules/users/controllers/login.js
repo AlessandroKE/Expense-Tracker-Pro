@@ -16,19 +16,19 @@ const login = async (req, res) => {
 
     // Add password verification logic here if applicable
 
-    console.log(getUser)
+    //console.log(getUser)
 
 
     const comparePassword = await bcrypt.compare(password, getUser.password);
 
     if(!comparePassword) return res.status(400).json({ error: "Email and password do not match"});
 
-    const acessToken =  jwtManager(getUser);
+    const accessToken =  jwtManager(getUser);
 
     res.status(200).json({
       status: "success",
        message: "Login successful", 
-       acessToken: acessToken,
+       accessToken: accessToken,
       });
   } catch (error) {
     console.error("Error during login: ", error);
