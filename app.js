@@ -3,6 +3,7 @@ const app = express();
 const errorHandlers = require('./handlers/errorHandlers');
 const mongoose = require('mongoose');
 const userRoutes = require('./modules/users/users.routes');
+const transactionRoutes = require('./modules/transactions/transactions.routes');
 
 require('dotenv').config()
 
@@ -10,8 +11,9 @@ require('dotenv').config()
 // app.use(...)
 app.use(express.json());
 
-
+// initialize the models
 require('./models/users.model');
+require('./models/transaction.model');
 
 mongoose.connect(process.env.mongo_connection,{}).then(()=>{
     console.log('Connection is established');
@@ -21,6 +23,7 @@ mongoose.connect(process.env.mongo_connection,{}).then(()=>{
 
 
 app.use('/api/users', userRoutes)
+app.use('/api/transaction', transactionRoutes)
 
 
 

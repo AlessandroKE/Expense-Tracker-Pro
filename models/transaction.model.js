@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const transactionsSchema = new mongoose.schema({
+const transactionsSchema = new mongoose.Schema({
 
     /* type: mongoose.Schema.Types.ObjectId: This specifies that the type of user_id is an ObjectId. 
     In MongoDB, ObjectId is a special type used to uniquely identify document */
@@ -18,6 +18,7 @@ const transactionsSchema = new mongoose.schema({
       transaction_type: {
         type: String,
         required: true,
+        //only two options available of the type income and expense.
         enum: ["income", "expense"],
       },
   
