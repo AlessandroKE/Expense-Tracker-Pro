@@ -8,19 +8,15 @@ const addIncome = async (req, res) => {
     const user_id = req.user._id; // Assuming req.user is populated by authentication middleware
 
     // Destructure the required fields from req.body
-    const { amount, transaction_type, remarks } = req.body;
+    const { amount, remarks } = req.body;
 
     // Validate the incoming data
-    if (!amount || !transaction_type || !remarks) {
+    if (!amount || !remarks) {
         return res.status(400).json({ message: 'All fields are required' });
     }
 
     if (amount <= 0) {
         return res.status(400).json({ message: 'Amount must be greater than 0' });
-    }
-
-    if (!['income', 'expense'].includes(transaction_type)) {
-        return res.status(400).json({ message: 'Transaction type must be either "income" or "expense"' });
     }
 
     try {
@@ -35,12 +31,26 @@ const addIncome = async (req, res) => {
         const newTransaction = new transactionModel({
             user_id, // Use the user_id extracted from the authentication context
             amount,
-            transaction_type,
+            transaction_type: 'income',
             remarks
         });
 
         // Save the transaction
         await newTransaction.save();
+
+        // Update user balance
+        await userModel.updateOne(
+            {
+                _id: user_id
+            },
+            {
+                //Increment Operation: $inc takes a field name and a numeric value. 
+                //It adds this value to the current value of the field.
+                $inc: {
+                    balance: amount
+                }
+            }
+        );
 
         // Send a success response
         res.status(201).json({ message: 'Transaction added successfully', transaction: newTransaction });
