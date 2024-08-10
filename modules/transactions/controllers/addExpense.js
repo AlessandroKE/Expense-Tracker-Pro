@@ -31,7 +31,7 @@ const addIncome = async (req, res) => {
         const newTransaction = new transactionModel({
             user_id, // Use the user_id extracted from the authentication context
             amount,
-            transaction_type: 'income',
+            transaction_type: 'expense',
             remarks
         });
 
@@ -47,7 +47,7 @@ const addIncome = async (req, res) => {
                 //Increment Operation: $inc takes a field name and a numeric value. 
                 //It adds this value to the current value of the field.
                 $inc: {
-                    balance: amount
+                    balance: amount * -1,
                 }
             }
         );
