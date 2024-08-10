@@ -30,11 +30,11 @@ const register = async (req, res) => {
       balance: balance,
     });
 
-    const acessToken =  jwtManager(createdUser);
+    const accessToken =  jwtManager(createdUser);
 
     res.status(201).json({ 
       status: "User registered successfully!", 
-      acessToken: acessToken,
+      accessToken: accessToken,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -20,6 +20,7 @@ const auth = (req, res, next) => {
         console.log(JWTverification);
         req.user = JWTverification;
 
+        
     } catch (err) {
         res.status(401).json({ 
             status: "failed",
