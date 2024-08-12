@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const userDashboard = async (req, res) => {
     const userModel = mongoose.model('users');
+    const transactionsModel = mongoose.model('transactions');
 
     //console.log(req.user);
 
@@ -10,10 +11,15 @@ const userDashboard = async (req, res) => {
         _id: req.user._id,
     }).select('full_name balance email')
 
-
+    const getTransactions = await transactionsModel.find({
+        user_id: req.user._id,
+        //the sort with negative - descending order.
+    }).sort('-createdAt').limit(3)
     res.status(200).json({
-        status: "Sucess",
-        data: getUser
+        status: "Success",
+        data: getUser,
+        getTransactions
+    
     })
 }
 
