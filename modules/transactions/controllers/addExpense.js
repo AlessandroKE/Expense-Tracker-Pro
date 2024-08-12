@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+//const addExpense = require('./addIncome');
 
-const addIncome = async (req, res) => {
+const addExpense = async (req, res) => {
     const transactionModel = mongoose.model('transactions');
     const userModel = mongoose.model('users');
 
@@ -60,4 +61,4 @@ const addIncome = async (req, res) => {
     }
 };
 
-module.exports = addIncome;
+module.exports = addExpense;
