@@ -19,7 +19,10 @@ const userSchema = new mongoose.Schema({
         type: 'number',
         required: [true, 'balance is required'],
         default: 0,
-    }
+    },
+    resetCode: {
+        type: 'number',
+    },
 
 },
 {
