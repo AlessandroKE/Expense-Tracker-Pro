@@ -1,37 +1,37 @@
 const mongoose = require('mongoose');
 
-
 const userSchema = new mongoose.Schema({
     full_name: {
-        type: 'string',
-        required: [true, 'full name is required']
+        type: String,
+        required: [true, 'Full name is required']
     },
     email: {
-        type: 'string',
-        required: [true, 'email is required']
+        type: String,
+        required: [true, 'Email is required'],
+        unique: true, // Ensures email uniqueness
+        lowercase: true, // Converts email to lowercase
+        trim: true, // Removes any leading/trailing whitespace
+        match: [/.+@.+\..+/, 'Please enter a valid email address'] // Email format validation
     },
     password: {
-        type: 'string',
-        required: [true, 'password is required']
+        type: String,
+        required: [true, 'Password is required']
     },
-    // MongoDB is case sensitive
     balance: {
-        type: 'number',
-        required: [true, 'balance is required'],
-        default: 0,
+        type: Number,
+        required: [true, 'Balance is required'],
+        default: 0
     },
     resetCode: {
-        type: 'number',
+        type: Number,
     },
-
-},
-{
-    timestamps:true,
-}
-)
-
+    resetCodeExpiry: {
+        type: Date
+    }
+}, {
+    timestamps: true
+});
 
 const userModel = mongoose.model('users', userSchema);
-
 
 module.exports = userModel;
