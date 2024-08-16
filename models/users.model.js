@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+
+//update users model to pick first name and last name.
 const userSchema = new mongoose.Schema({
     full_name: {
         type: String,
